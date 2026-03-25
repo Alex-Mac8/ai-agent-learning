@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Learning — 21-Day Course</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0eb;
+    --white: #ffffff;
+    --terracotta: #c4825a;
+    --terracotta-light: #d4a07a;
+    --terracotta-dark: #a06840;
+    --text-primary: #2c2c2c;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --blue: #a5d8ff;
+    --blue-strong: #1971c2;
+    --green: #96f2d7;
+    --green-strong: #2f9e44;
+    --yellow: #ffd43b;
+    --yellow-strong: #e67700;
+    --purple: #f3d9fa;
+    --purple-strong: #862e9c;
+    --border: #e5ddd5;
+    --shadow: rgba(196, 130, 90, 0.1);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === HEADER === */
+  .hero {
+    background: linear-gradient(135deg, var(--cream) 0%, #ede5db 100%);
+    padding: 60px 24px 50px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-emoji { font-size: 64px; margin-bottom: 16px; }
+
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .tag {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* === PROGRESS BAR === */
+  .progress-section {
+    background: var(--white);
+    margin: 24px auto;
+    max-width: 800px;
+    padding: 24px 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .progress-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .progress-count {
+    font-size: 14px;
+    color: var(--terracotta);
+    font-weight: 600;
+  }
+
+  .progress-bar-track {
+    background: var(--cream);
+    border-radius: 12px;
+    height: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--terracotta), var(--terracotta-light));
+    border-radius: 12px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  .day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+
+  .day-dot {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    background: var(--cream);
+    border: 2px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .day-dot:hover { transform: scale(1.1); border-color: var(--terracotta); }
+  .day-dot.completed {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: white;
+  }
+  .day-dot.completed::after {
+    content: '✓';
+    font-size: 14px;
+    position: absolute;
+  }
+  .day-dot.completed > span { visibility: hidden; }
+
+  .week-labels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* === NAV === */
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-inner {
+    display: flex;
+    gap: 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .nav-tab:hover { color: var(--text-secondary); }
+  .nav-tab.active {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+    font-weight: 600;
+  }
+
+  /* === CONTENT === */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* === WEEK CARDS === */
+  .week-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .week-card-header {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .week-card-header:hover { background: var(--cream); }
+
+  .week-card-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .week-card-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .week-card-type {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  .type-video { background: #fff3bf; color: var(--yellow-strong); }
+  .type-hands-on { background: #d3f9d8; color: var(--green-strong); }
+  .type-reflect { background: var(--purple); color: var(--purple-strong); }
+
+  .chevron {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+
+  .week-card.open .chevron { transform: rotate(180deg); }
+
+  .week-card-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .week-card.open .week-card-body { display: block; }
+
+  .week-card-body h4 {
+    margin: 16px 0 8px;
+    font-size: 15px;
+    color: var(--terracotta);
+  }
+
+  .week-card-body ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .week-card-body li {
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .week-card-body li::before {
+    content: '→ ';
+    color: var(--terracotta);
+  }
+
+  .video-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--terracotta);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .video-link:hover { text-decoration: underline; }
+
+  /* === DIAGRAMS === */
+  .diagram-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .diagram-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .diagram-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .diagram-preview {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    white-space: pre-line;
+    overflow-x: auto;
+  }
+
+  .diagram-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--terracotta-dark); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--terracotta);
+    border: 1px solid var(--terracotta);
+  }
+  .btn-outline:hover { background: var(--terracotta); color: white; }
+
+  /* === VIDEO SECTION === */
+  .video-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .video-card h4 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .video-card .source {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .video-card .desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* === BUILD IN PUBLIC === */
+  .bip-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .bip-card h3 { margin-bottom: 12px; }
+
+  .template-block {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+
+  .hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .hashtag {
+    background: var(--terracotta);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* === SECTION HEADERS === */
+  .section-header {
+    margin-bottom: 24px;
+  }
+
+  .section-header h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .section-header p {
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  /* === SHARE BUTTONS === */
+  .share-bar {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+
+  .share-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .share-btn:hover {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+  }
+
+  /* === WEEK COLOR BARS === */
+  .week-1 .week-card-header { border-left: 4px solid var(--blue-strong); }
+  .week-2 .week-card-header { border-left: 4px solid var(--green-strong); }
+  .week-3 .week-card-header { border-left: 4px solid var(--purple-strong); }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--text-muted);
+    font-size: 14px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  footer a { color: var(--terracotta); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .hero-emoji { font-size: 48px; }
+    .container { padding: 16px; }
+    .nav-tab { padding: 12px 14px; font-size: 13px; }
+    .day-grid { gap: 4px; }
+    .day-dot { font-size: 10px; }
+    .diagram-preview { font-size: 12px; padding: 20px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-emoji">🤖</div>
+  <h1>AI Agent Learning</h1>
+  <p class="subtitle">From AI user → agent builder in 21 days · 1 hour/day</p>
+  <div class="hero-tags">
+    <span class="tag">🎥 Video-heavy</span>
+    <span class="tag">💻 Hands-on projects</span>
+    <span class="tag">📱 Build in public</span>
+    <span class="tag">⏱️ 1hr/day</span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-header">
+    <h3>📊 Progress</h3>
+    <span class="progress-count" id="progress-text">0 / 21 days</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-bar"></div>
+  </div>
+  <div class="day-grid" id="day-grid"></div>
+  <div class="week-labels">
+    <span>Week 1: Foundations</span>
+    <span>Week 2: Building</span>
+    <span>Week 3: Advanced</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-section="curriculum">📚 Curriculum</div>
+    <div class="nav-tab" data-section="diagrams">🖼️ Diagrams</div>
+    <div class="nav-tab" data-section="videos">🎥 Videos</div>
+    <div class="nav-tab" data-section="projects">💻 Projects</div>
+    <div class="nav-tab" data-section="share">📱 Build in Public</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <!-- CURRICULUM SECTION -->
+  <div class="section active" id="curriculum">
+    <div class="section-header">
+      <h2>📚 3-Week Curriculum</h2>
+      <p>Click any day to expand details. Check off days as you complete them.</p>
+    </div>
+
+    <h3 style="color: var(--blue-strong); margin: 20px 0 12px;">🧠 Week 1: Foundations</h3>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 1: What is an AI Agent?</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=F8NKVhkZZWI" target="_blank">🎥 What are AI Agents? — AI Jason</a></li>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=sal78ACtGTc" target="_blank">🎥 AI Agents Explained — David Ondrej</a></li>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank">🎥 DeepLearning.AI: What is an Agent? — Lesson 1</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li>An agent perceives, decides, and acts autonomously</li>
+          <li>Agents use LLMs as their "brain" but add tools, memory, and planning</li>
+          <li>The difference between using AI vs AI that uses tools</li>
+        </ul>
+        <h4>Activity (20 min)</h4>
+        <ul>
+          <li>Write your own definition of an AI agent</li>
+          <li>Identify 3 agents you already use (even if you didn't know it!)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 2: The PDA Loop</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video + 🖼️ Diagram</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (30 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=Eug2clsLtFs" target="_blank">🎥 ReAct Pattern Explained — Sam Witteveen</a></li>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank">🎥 DeepLearning.AI: Agent Loop — Lesson 2</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li><strong>Perceive:</strong> Agent receives input (user query, tool results)</li>
+          <li><strong>Decide:</strong> LLM reasons about what to do next</li>
+          <li><strong>Act:</strong> Agent executes an action (call tool, respond)</li>
+          <li>The loop repeats until the task is complete</li>
+        </ul>
+        <h4>Activity (30 min)</h4>
+        <ul>
+          <li>Study the PDA Loop diagram (Diagrams tab)</li>
+          <li>Trace through the weather example step by step</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 3: Agent vs Chatbot vs RAG</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=T-D1OfcDW1M" target="_blank">🎥 What is RAG? — IBM Technology</a></li>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=F8NKVhkZZWI" target="_blank">🎥 Agent vs Chatbot comparison — AI Jason</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li><strong>Chatbot:</strong> Simple Q&A, no tools, no planning</li>
+          <li><strong>RAG:</strong> Retrieval + generation, grounded answers</li>
+          <li><strong>Agent:</strong> Tools + memory + planning + autonomy</li>
+        </ul>
+        <h4>Activity (20 min)</h4>
+        <ul>
+          <li>Study the comparison diagram (Diagrams tab)</li>
+          <li>Classify 5 AI products you use: chatbot, RAG, or agent?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 4: Tools & Function Calling</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video + 💻 Demo</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=0lOSvOoF2to" target="_blank">🎥 Function Calling Explained — Sam Witteveen</a></li>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=aqdWSYWC_LO" target="_blank">🎥 OpenAI Function Calling Tutorial</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li>Function calling = how LLMs interact with external tools</li>
+          <li>JSON schema defines available tools</li>
+          <li>LLM decides WHICH tool to call and with WHAT parameters</li>
+        </ul>
+        <h4>Activity (20 min)</h4>
+        <ul>
+          <li>Study the Tool Calling Architecture diagram</li>
+          <li>List 5 tools you'd give an agent for your work</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 5: Memory & Context</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=6cKzFZIFNQk" target="_blank">🎥 AI Agent Memory Explained</a></li>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank">🎥 DeepLearning.AI: Persistence and Memory</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li><strong>Short-term:</strong> Current conversation context</li>
+          <li><strong>Long-term:</strong> Stored across sessions (vector DB, files)</li>
+          <li><strong>Working memory:</strong> Intermediate results during a task</li>
+        </ul>
+        <h4>Activity (20 min)</h4>
+        <ul>
+          <li>Think about how Alex (your AI assistant) uses memory</li>
+          <li>What would an agent forget without long-term memory?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 6: Explore Existing Agents</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-hands-on">💻 Hands-on</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Activity (60 min)</h4>
+        <ul>
+          <li><strong>AutoGPT (20 min):</strong> Read docs, watch demo, note architecture</li>
+          <li><strong>BabyAGI (15 min):</strong> Understand task decomposition loop</li>
+          <li><strong>OpenClaw (15 min):</strong> Analyze how Alex works — it's an agent!</li>
+          <li><strong>Write-up (10 min):</strong> Compare all three architectures</li>
+        </ul>
+        <h4>Deliverable</h4>
+        <ul>
+          <li>Agent comparison table (see projects/week-01/)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-1">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 7: Week 1 Review + RedNote Post</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-reflect">📝 Reflect</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Review (30 min)</h4>
+        <ul>
+          <li>Revisit notes from Days 1-5</li>
+          <li>What was your biggest "aha moment"?</li>
+          <li>What concept do you want to revisit?</li>
+        </ul>
+        <h4>Share (30 min)</h4>
+        <ul>
+          <li>Write your Week 1 RedNote post (see Build in Public tab)</li>
+          <li>Share your progress screenshot</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="color: var(--green-strong); margin: 28px 0 12px;">🔨 Week 2: Building</h3>
+
+    <div class="week-card week-2">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 8: LangChain Fundamentals</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video + 💻 Code</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch + Code (60 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/" target="_blank">🎥 DeepLearning.AI: Functions, Tools & Agents — Lessons 1-2</a></li>
+        </ul>
+        <h4>Setup</h4>
+        <ul>
+          <li>Install: pip install langchain langchain-openai python-dotenv</li>
+          <li>Get OpenAI API key</li>
+          <li>Run your first LangChain chain</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-2">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 9: Prompt Engineering for Agents</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video + 💻 Practice</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/" target="_blank">🎥 DeepLearning.AI: Functions, Tools & Agents — Lesson 3</a></li>
+        </ul>
+        <h4>Practice (20 min)</h4>
+        <ul>
+          <li>Write a system prompt for a research assistant</li>
+          <li>Test ReAct prompting pattern</li>
+          <li>Add guard rails and constraints</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-2">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 10: Tool Calling Deep Dive</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-hands-on">💻 Code</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch + Code (60 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/" target="_blank">🎥 DeepLearning.AI: Functions, Tools & Agents — Lessons 4-5</a></li>
+        </ul>
+        <h4>Code Along</h4>
+        <ul>
+          <li>Create custom tools with @tool decorator</li>
+          <li>Build an agent with search + calculator tools</li>
+          <li>Observe how the agent chooses tools</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-2">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 11-13: Build a Research Agent 🔎</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-hands-on">💻 Project</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>3-Day Project</h4>
+        <ul>
+          <li><strong>Day 11:</strong> Setup + basic agent (search + summarize)</li>
+          <li><strong>Day 12:</strong> Add memory (multi-turn research)</li>
+          <li><strong>Day 13:</strong> Testing, error handling, polish</li>
+        </ul>
+        <h4>What You'll Build</h4>
+        <ul>
+          <li>A research agent that searches the web</li>
+          <li>Summarizes findings</li>
+          <li>Remembers previous queries</li>
+          <li>Saves notes to files</li>
+        </ul>
+        <ul>
+          <li>Full code in projects/week-02/ folder</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-2">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 14: Week 2 Review + RedNote Post</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-reflect">📝 Reflect</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Review (30 min)</h4>
+        <ul>
+          <li>Demo your research agent</li>
+          <li>What worked? What was harder than expected?</li>
+        </ul>
+        <h4>Share (30 min)</h4>
+        <ul>
+          <li>Write your Week 2 RedNote post</li>
+          <li>Include a code screenshot or demo GIF</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="color: var(--purple-strong); margin: 28px 0 12px;">🚀 Week 3: Advanced Patterns</h3>
+
+    <div class="week-card week-3">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 15: Multi-Agent Architectures</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (45 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=sPzc6hMg7So" target="_blank">🎥 CrewAI: Multi-Agent Framework</a></li>
+          <li><a class="video-link" href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank">🎥 DeepLearning.AI: Multi-Agent lesson</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li>Supervisor, peer, pipeline, and debate patterns</li>
+          <li>When to use multi-agent vs single-agent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-3">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 16: Agent Communication Patterns</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=DjuXACWYkkU" target="_blank">🎥 Agent Communication — Sam Witteveen</a></li>
+          <li><a class="video-link" href="https://www.youtube.com/watch?v=bq1Plo2RhAc" target="_blank">🎥 LangGraph Multi-Agent Workflows</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li>Message passing between agents</li>
+          <li>Shared vs isolated state</li>
+          <li>Handoff protocols</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-3">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 17: Production Patterns & Safety</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-video">🎥 Video</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Watch (40 min)</h4>
+        <ul>
+          <li><a class="video-link" href="https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns" target="_blank">📖 Anthropic: Building Effective Agents</a></li>
+        </ul>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li>Human-in-the-loop: when to ask for approval</li>
+          <li>Rate limiting and sandboxing</li>
+          <li>Monitoring agent decisions and costs</li>
+          <li>Fallback patterns for graceful degradation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-3">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 18-20: Capstone — Multi-Agent Content Pipeline 🏭</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-hands-on">💻 Project</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>3-Day Capstone</h4>
+        <ul>
+          <li><strong>Day 18:</strong> Setup + coordinator logic</li>
+          <li><strong>Day 19:</strong> Build 3 agents (research, writer, editor)</li>
+          <li><strong>Day 20:</strong> Polish, error handling, documentation</li>
+        </ul>
+        <h4>What You'll Build</h4>
+        <ul>
+          <li>Research Agent → finds information</li>
+          <li>Writer Agent → creates content</li>
+          <li>Editor Agent → reviews and polishes</li>
+          <li>Coordinator → orchestrates the pipeline</li>
+        </ul>
+        <ul>
+          <li>Full code in projects/week-03/ folder</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card week-3">
+      <div class="week-card-header" onclick="toggleCard(this)">
+        <span class="week-card-title">Day 21: Course Review + Final Post 🎉</span>
+        <div class="week-card-meta">
+          <span class="week-card-type type-reflect">📝 Celebrate!</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="week-card-body">
+        <h4>Review (30 min)</h4>
+        <ul>
+          <li>What did you learn across all 3 weeks?</li>
+          <li>What's your biggest "before vs after" change?</li>
+          <li>What do you want to build next?</li>
+        </ul>
+        <h4>Celebrate (30 min)</h4>
+        <ul>
+          <li>Write your final RedNote post</li>
+          <li>Share your completed progress bar screenshot</li>
+          <li>🎉 You did it! 21 days, 21 hours, agent builder!</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGRAMS SECTION -->
+  <div class="section" id="diagrams">
+    <div class="section-header">
+      <h2>🖼️ Diagrams</h2>
+      <p>Visual guides for key concepts. All editable in Excalidraw.</p>
+    </div>
+
+    <div class="diagram-card">
+      <h3>1. The PDA Loop</h3>
+      <p>How agents think: Perceive → Decide → Act, on repeat.</p>
+      <div class="diagram-preview">
+👁️ PERCEIVE          🧠 DECIDE           ⚡ ACT
+Receive input    →   LLM reasons     →   Execute action
+User query           Chain-of-thought     Call tool, respond
+Tool results         Plan next step       Update memory
+
+                    🔄 Loop until task complete
+
+Example: "What's the weather?"
+👁️ User asks about weather
+🧠 I need to call the weather API
+⚡ Call weather_tool("Sydney")
+👁️ Tool returns "25°C, sunny"
+🧠 I have the answer
+⚡ "It's 25°C and sunny in Sydney!"</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/blob/main/diagrams/01-pda-loop.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
+      </div>
+    </div>
+
+    <div class="diagram-card">
+      <h3>2. Agent vs Chatbot vs RAG</h3>
+      <p>Understanding the spectrum from simple chatbot to autonomous agent.</p>
+      <div class="diagram-preview">
+💬 CHATBOT              📚 RAG                 🤖 AGENT
+─────────────────────────────────────────────────────────
+User → LLM → Answer    User → Search → LLM    User → Think → Act → Loop
+
+✅ Simple Q&A           ✅ Knowledge retrieval  ✅ Multiple tools
+✅ Conversation         ✅ Grounded answers     ✅ Planning & reasoning
+                        ✅ Source citations     ✅ Memory (short+long)
+❌ No tools                                    ✅ Autonomous actions
+❌ No long-term memory  ❌ No multi-step       ✅ Multi-step tasks
+❌ No planning          ❌ Reactive only
+❌ No autonomy
+
+Think: ChatGPT basic   Think: Perplexity      Think: Alex, AutoGPT
+
+Simple ←───────────────────────────────────────→ Powerful</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/blob/main/diagrams/02-agent-vs-chatbot-vs-rag.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
+      </div>
+    </div>
+
+    <div class="diagram-card">
+      <h3>3. Tool Calling Architecture</h3>
+      <p>How LLMs interact with external tools through structured JSON.</p>
+      <div class="diagram-preview">
+👤 User                  🧠 LLM                    📞 Tool Call
+"What's the weather?"  →  Reads tool schemas    →   {
+                          Decides: use search         "tool": "weather",
+                          Generates JSON call          "location": "Sydney"
+                                                      }
+                                                        ↓
+📋 Tool Schema            🔧 Tool Registry
+Available tools:          ┌─────────┬──────────┐
+- weather(location)       │🔍Search │🧮Calculate│
+- search(query)           │💾Save   │📧Email    │
+- calculate(expr)         └─────────┴──────────┘
+                                    ↓
+                            Results → back to LLM → Response to User
+
+Key: The LLM never runs tools directly — it outputs JSON that the system executes.</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/blob/main/diagrams/03-tool-calling.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
+      </div>
+    </div>
+
+    <div class="diagram-card">
+      <h3>4. Multi-Agent Collaboration</h3>
+      <p>How specialized agents work together on complex tasks.</p>
+      <div class="diagram-preview">
+                        👑 COORDINATOR
+                   Routes tasks, checks quality
+                    ╱         │         ╲
+                  ╱           │           ╲
+          🔍 Researcher   ✍️ Writer    📝 Editor
+          Web Search      Text Gen     Grammar Check
+          API Calls       Formatting   Fact Verify
+          Data Analysis   Templates    Style Guide
+
+Pipeline Flow:
+1️⃣ User Request → Coordinator receives topic
+2️⃣ Coordinator → Researcher: "Find info about X"
+3️⃣ Research findings → Writer: "Write about X"
+4️⃣ Draft → Editor: "Polish this"
+5️⃣ Final content → User
+
+Patterns:
+🏢 Supervisor (above)  🤝 Peer (equals)
+🔗 Pipeline (A→B→C)    ⚖️ Debate (challenge)</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/blob/main/diagrams/04-multi-agent.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
+      </div>
+    </div>
+
+    <div class="diagram-card">
+      <h3>5. Course Concept Map</h3>
+      <p>How all 21 days connect together.</p>
+      <div class="diagram-preview">
+  🧠 Week 1: Foundations         🤖 AI AGENT          🚀 Week 3: Advanced
+  ┌──────────┬──────────┐           (core)           ┌──────────┬──────────┐
+  │ PDA Loop │  Tools   │     ←─── center ───→       │Multi-Agt │Production│
+  │  Memory  │ vs Chat  │                            │  Safety  │ Patterns │
+  └──────────┴──────────┘                            └──────────┴──────────┘
+                                    │
+                                    ↓
+                          🔨 Week 2: Building
+                          ┌──────────┬──────────┐
+                          │LangChain │ Prompts  │
+                          │  🔎 Research Agent   │
+                          └──────────┴──────────┘
+
+  🧠 Understand → 🔨 Build → 🚀 Scale
+  Theory (Wk 1) → Practice (Wk 2) → Mastery (Wk 3)</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/blob/main/diagrams/05-weekly-concept-map.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEOS SECTION -->
+  <div class="section" id="videos">
+    <div class="section-header">
+      <h2>🎥 Video Resources</h2>
+      <p>Curated free videos for each week. Quality over quantity.</p>
+    </div>
+
+    <h3 style="margin: 16px 0 12px; color: var(--terracotta);">📚 Full Courses (Free)</h3>
+
+    <div class="video-card">
+      <h4>🎓 AI Agents in LangGraph — DeepLearning.AI</h4>
+      <div class="source">DeepLearning.AI · Free Short Course · ~2 hours</div>
+      <div class="desc">The best intro to agent concepts. Covers agents, tools, memory, and multi-agent patterns using LangGraph. Used in Weeks 1-3.</div>
+      <a class="video-link" href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank" style="margin-top: 8px; display: inline-block;">→ Start Course</a>
+    </div>
+
+    <div class="video-card">
+      <h4>🎓 Functions, Tools and Agents with LangChain — DeepLearning.AI</h4>
+      <div class="source">DeepLearning.AI · Free Short Course · ~2 hours</div>
+      <div class="desc">Hands-on coding course for building agents with LangChain. Function calling, custom tools, agent executors. Used in Week 2.</div>
+      <a class="video-link" href="https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/" target="_blank" style="margin-top: 8px; display: inline-block;">→ Start Course</a>
+    </div>
+
+    <div class="video-card">
+      <h4>🎓 Building Agentic RAG with LlamaIndex — DeepLearning.AI</h4>
+      <div class="source">DeepLearning.AI · Free Short Course · ~1.5 hours</div>
+      <div class="desc">Combines RAG with agent capabilities. Great for understanding the spectrum from RAG to full agent. Bonus resource.</div>
+      <a class="video-link" href="https://www.deeplearning.ai/short-courses/building-agentic-rag-with-llamaindex/" target="_blank" style="margin-top: 8px; display: inline-block;">→ Start Course</a>
+    </div>
+
+    <h3 style="margin: 24px 0 12px; color: var(--terracotta);">🎬 YouTube Creators</h3>
+
+    <div class="video-card">
+      <h4>AI Jason</h4>
+      <div class="source">YouTube · Best for: Agent concepts & architectures</div>
+      <div class="desc">Clear explanations of agent systems, comparisons, and real-world applications. Great visual diagrams.</div>
+      <a class="video-link" href="https://www.youtube.com/@AIJasonZ" target="_blank" style="margin-top: 8px; display: inline-block;">→ Channel</a>
+    </div>
+
+    <div class="video-card">
+      <h4>Sam Witteveen</h4>
+      <div class="source">YouTube · Best for: Deep technical tutorials</div>
+      <div class="desc">Detailed LangChain, function calling, and agent implementation walkthroughs. Code-heavy, great for Week 2.</div>
+      <a class="video-link" href="https://www.youtube.com/@samwitteveen" target="_blank" style="margin-top: 8px; display: inline-block;">→ Channel</a>
+    </div>
+
+    <div class="video-card">
+      <h4>David Ondrej</h4>
+      <div class="source">YouTube · Best for: AI news & agent trends</div>
+      <div class="desc">Keeps you up to date on the latest in AI agents, new frameworks, and industry moves.</div>
+      <a class="video-link" href="https://www.youtube.com/@DavidOndrej" target="_blank" style="margin-top: 8px; display: inline-block;">→ Channel</a>
+    </div>
+
+    <div class="video-card">
+      <h4>LangChain Official</h4>
+      <div class="source">YouTube · Best for: Framework tutorials</div>
+      <div class="desc">Official tutorials, demos, and feature walkthroughs from the LangChain team.</div>
+      <a class="video-link" href="https://www.youtube.com/@LangChain" target="_blank" style="margin-top: 8px; display: inline-block;">→ Channel</a>
+    </div>
+
+    <h3 style="margin: 24px 0 12px; color: var(--terracotta);">🇨🇳 Chinese Resources</h3>
+
+    <div class="video-card">
+      <h4>JZ的21天AI Agent系列</h4>
+      <div class="source">小红书 · 21-day learning journey</div>
+      <div class="desc">JZ's personal learning journey documenting 21 days of AI agent study. Great companion for this course — she's done the same path! Follow along on RedNote.</div>
+      <a class="video-link" href="https://www.xiaohongshu.com/user/profile/JZ" target="_blank" style="margin-top: 8px; display: inline-block;">→ Follow on 小红书</a>
+    </div>
+
+    <h3 style="margin: 24px 0 12px; color: var(--terracotta);">📖 Reading Resources</h3>
+
+    <div class="video-card">
+      <h4>Lilian Weng: LLM Powered Autonomous Agents</h4>
+      <div class="source">Blog Post · OpenAI researcher · ~30 min read</div>
+      <div class="desc">The definitive blog post on agent architectures. Covers planning, memory, tool use, and more. Technical but accessible.</div>
+      <a class="video-link" href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank" style="margin-top: 8px; display: inline-block;">→ Read</a>
+    </div>
+
+    <div class="video-card">
+      <h4>Anthropic: Building Effective Agents</h4>
+      <div class="source">Documentation · Anthropic · ~15 min read</div>
+      <div class="desc">Practical patterns for building production agents. Covers safety, human-in-the-loop, and common architectures.</div>
+      <a class="video-link" href="https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns" target="_blank" style="margin-top: 8px; display: inline-block;">→ Read</a>
+    </div>
+  </div>
+
+  <!-- PROJECTS SECTION -->
+  <div class="section" id="projects">
+    <div class="section-header">
+      <h2>💻 Projects</h2>
+      <p>Three hands-on projects, one per week. Learn by building.</p>
+    </div>
+
+    <div class="diagram-card">
+      <h3>Week 1: Agent Explorer 🔍</h3>
+      <p>Explore existing AI agents and compare their architectures.</p>
+      <div class="diagram-preview">
+What you'll do:
+1. Study AutoGPT — architecture, tools, limitations
+2. Study BabyAGI — task decomposition approach
+3. Analyze OpenClaw (Alex!) — a real agent you use daily
+4. Write a comparison table
+
+Deliverable: Agent comparison document
+
+Time: Day 6 (60 min)
+Difficulty: ⭐ Beginner</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/tree/main/projects/week-01" target="_blank">📁 Project Files</a>
+      </div>
+    </div>
+
+    <div class="diagram-card">
+      <h3>Week 2: Research Agent 🔎</h3>
+      <p>Build a research assistant that searches the web and summarizes findings.</p>
+      <div class="diagram-preview">
+What you'll build:
+- LangChain agent with web search + note-saving tools
+- Multi-turn conversation with memory
+- Error handling and logging
+
+Tech: Python + LangChain + Tavily Search + OpenAI
+
+Deliverable: Working research agent CLI
+
+Time: Days 11-13 (3 hours total)
+Difficulty: ⭐⭐ Intermediate</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/tree/main/projects/week-02" target="_blank">📁 Project Files</a>
+      </div>
+    </div>
+
+    <div class="diagram-card">
+      <h3>Week 3: Content Pipeline 🏭</h3>
+      <p>Build a multi-agent system where Research → Writer → Editor collaborate.</p>
+      <div class="diagram-preview">
+What you'll build:
+- Coordinator agent that orchestrates the pipeline
+- Research Agent → finds information on a topic  
+- Writer Agent → creates content from research
+- Editor Agent → reviews and polishes output
+
+Tech: Python + LangChain + LangGraph
+
+Deliverable: Working multi-agent content creation system
+
+Time: Days 18-20 (3 hours total)
+Difficulty: ⭐⭐⭐ Advanced</div>
+      <div class="diagram-actions">
+        <a class="btn btn-outline" href="https://github.com/YOUR_USERNAME/ai-agent-learning/tree/main/projects/week-03" target="_blank">📁 Project Files</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILD IN PUBLIC SECTION -->
+  <div class="section" id="share">
+    <div class="section-header">
+      <h2>📱 Build in Public</h2>
+      <p>Share your journey on RedNote / 小红书. Templates ready to copy.</p>
+    </div>
+
+    <div class="share-bar">
+      <a class="share-btn" href="https://www.xiaohongshu.com" target="_blank">📱 RedNote 小红书</a>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=Day%20X%20of%20learning%20AI%20Agents!%20%2321DayAILearning&url=" target="_blank">🐦 Twitter / X</a>
+    </div>
+
+    <div class="bip-card">
+      <h3>📌 Hashtags</h3>
+      <div class="hashtags">
+        <span class="hashtag">#21天AI学习</span>
+        <span class="hashtag">#AIAgent</span>
+        <span class="hashtag">#AI学习笔记</span>
+        <span class="hashtag">#程序员学习</span>
+        <span class="hashtag">#BuildInPublic</span>
+        <span class="hashtag">#AI智能体</span>
+        <span class="hashtag">#LangChain</span>
+        <span class="hashtag">#学习打卡</span>
+      </div>
+    </div>
+
+    <div class="bip-card">
+      <h3>📝 Week 1 Post Template</h3>
+      <div class="template-block">📚 #21天AI学习 Day 7/21
+
+这周我花了7个小时，从零开始学习AI Agent。
+
+1️⃣ AI Agent不是聊天机器人
+Agent可以主动思考、使用工具、记住上下文。
+
+2️⃣ PDA循环是核心
+感知(Perceive) → 决策(Decide) → 行动(Act)
+
+3️⃣ 工具调用是关键能力
+Agent的强大在于它能调用什么工具。
+
+最大的收获：[你的收获]
+
+#AIAgent #AI学习笔记 #程序员学习</div>
+      <button class="btn btn-outline" onclick="copyTemplate(this)" style="margin-top: 8px;">📋 Copy Template</button>
+    </div>
+
+    <div class="bip-card">
+      <h3>📝 Week 2 Post Template</h3>
+      <div class="template-block">📚 #21天AI学习 Day 14/21
+
+从看视频到写代码，这周是真正的突破！
+
+1️⃣ 学了LangChain框架
+2️⃣ 写了一个研究助手Agent
+3️⃣ 最难的部分是调试
+
+给新手的建议：
+- 先用verbose=True看Agent的思考过程
+- 从简单的工具开始
+- 不要怕报错
+
+下周：多Agent系统！🚀
+
+#AIAgent #LangChain #Python #程序员学习</div>
+      <button class="btn btn-outline" onclick="copyTemplate(this)" style="margin-top: 8px;">📋 Copy Template</button>
+    </div>
+
+    <div class="bip-card">
+      <h3>📝 Week 3 / Final Post Template</h3>
+      <div class="template-block">📚 #21天AI学习 Day 21/21 ✅
+
+21天，21个小时，从AI工具使用者变成Agent搭建者。
+
+第一周🧠 理论基础 — 理解Agent本质
+第二周🔨 动手搭建 — 第一个Agent
+第三周🚀 高级模式 — 多Agent系统
+
+最大的感悟：
+1. [感悟1]
+2. [感悟2]  
+3. [感悟3]
+
+给想学AI Agent的朋友：
+每天1小时就够了！
+
+#21天AI学习 #AIAgent #学习总结 #BuildInPublic</div>
+      <button class="btn btn-outline" onclick="copyTemplate(this)" style="margin-top: 8px;">📋 Copy Template</button>
+    </div>
+
+    <div class="bip-card">
+      <h3>💡 Weekly Reflection Prompts</h3>
+      <div class="template-block">Week 1 Reflection:
+• What's the most surprising thing about AI agents?
+• Can you explain the PDA loop to a friend?
+• What agents do you already use in daily life?
+
+Week 2 Reflection:
+• What was hardest about building your first agent?
+• How did it feel when your agent made its first tool call?
+• What would you add to your research agent?
+
+Week 3 Reflection:
+• How do multi-agent systems change what's possible?
+• What would you build with agents for your job?
+• What's your next learning goal?</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built with ❤️ for learning AI agents, one hour at a time.</p>
+  <p style="margin-top: 8px;">
+    <a href="https://github.com/YOUR_USERNAME/ai-agent-learning">GitHub</a> ·
+    <a href="https://www.xiaohongshu.com">RedNote 小红书</a>
+  </p>
+</footer>
+
+<script>
+  // === PROGRESS TRACKING ===
+  const STORAGE_KEY = 'ai-agent-progress';
+
+  function getProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch { return {}; }
+  }
+
+  function saveProgress(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function renderProgress() {
+    const progress = getProgress();
+    const grid = document.getElementById('day-grid');
+    const bar = document.getElementById('progress-bar');
+    const text = document.getElementById('progress-text');
+    
+    grid.innerHTML = '';
+    let completed = 0;
+
+    for (let i = 1; i <= 21; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'day-dot' + (progress[i] ? ' completed' : '');
+      dot.innerHTML = `<span>${i}</span>`;
+      dot.title = `Day ${i}` + (progress[i] ? ' ✓' : ' — click to mark complete');
+      dot.onclick = () => {
+        const p = getProgress();
+        p[i] = !p[i];
+        saveProgress(p);
+        renderProgress();
+      };
+      grid.appendChild(dot);
+      if (progress[i]) completed++;
+    }
+
+    const pct = Math.round((completed / 21) * 100);
+    bar.style.width = pct + '%';
+    text.textContent = `${completed} / 21 days (${pct}%)`;
+  }
+
+  renderProgress();
+
+  // === NAV TABS ===
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.section).classList.add('active');
+    });
+  });
+
+  // === ACCORDION CARDS ===
+  function toggleCard(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  // === COPY TEMPLATE ===
+  function copyTemplate(btn) {
+    const text = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = orig, 2000);
+    });
+  }
+</script>
+</body>
+</html>
