@@ -24,6 +24,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Agent Learning — 21-Day Course</title>
+
+<!-- PWA Meta Tags -->
+<meta name="theme-color" content="#c4825a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AI Agents">
+<meta name="description" content="21-Day AI Agent Course — Learn to build AI agents from scratch">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- PWA Manifest & Icons -->
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -1491,6 +1506,113 @@ Week 3 Reflection:
       setTimeout(() => btn.textContent = orig, 2000);
     });
   }
+
+  // === PWA SERVICE WORKER ===
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => {
+          console.log('✅ Service Worker registered:', reg.scope);
+          // Check for updates periodically
+          setInterval(() => reg.update(), 60 * 60 * 1000); // hourly
+        })
+        .catch(err => console.warn('SW registration failed:', err));
+    });
+  }
+
+  // === PWA INSTALL PROMPT ===
+  let deferredPrompt;
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallBanner();
+  });
+
+  function showInstallBanner() {
+    // Don't show if already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) return;
+    if (navigator.standalone) return; // iOS
+    
+    const banner = document.createElement('div');
+    banner.id = 'pwa-install-banner';
+    banner.innerHTML = `
+      <div style="
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        border: 1px solid #e5ddd5;
+        border-radius: 16px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 8px 32px rgba(196, 130, 90, 0.2);
+        z-index: 10000;
+        max-width: 420px;
+        width: calc(100% - 40px);
+        font-family: 'Inter', sans-serif;
+        animation: slideUp 0.4s ease;
+      ">
+        <div style="font-size: 2rem; flex-shrink: 0;">🤖</div>
+        <div style="flex: 1;">
+          <div style="font-weight: 600; font-size: 0.95rem; color: #2c2c2c;">Install AI Agent Learning</div>
+          <div style="font-size: 0.8rem; color: #999; margin-top: 2px;">Access the course offline anytime</div>
+        </div>
+        <button onclick="installPWA()" style="
+          background: #c4825a;
+          color: white;
+          border: none;
+          padding: 10px 18px;
+          border-radius: 10px;
+          font-weight: 600;
+          font-size: 0.85rem;
+          cursor: pointer;
+          white-space: nowrap;
+          flex-shrink: 0;
+        ">Install</button>
+        <button onclick="dismissInstall()" style="
+          background: none;
+          border: none;
+          color: #999;
+          font-size: 1.2rem;
+          cursor: pointer;
+          padding: 4px;
+          line-height: 1;
+          flex-shrink: 0;
+        ">✕</button>
+      </div>
+    `;
+    
+    // Add slide-up animation
+    const style = document.createElement('style');
+    style.textContent = '@keyframes slideUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }';
+    document.head.appendChild(style);
+    
+    document.body.appendChild(banner);
+  }
+
+  async function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log('Install prompt outcome:', outcome);
+    deferredPrompt = null;
+    dismissInstall();
+  }
+
+  function dismissInstall() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.remove();
+  }
+
+  // Hide banner if app is installed
+  window.addEventListener('appinstalled', () => {
+    console.log('✅ PWA installed!');
+    dismissInstall();
+  });
 </script>
 </body>
 </html>
