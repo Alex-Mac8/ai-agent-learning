@@ -400,14 +400,15 @@
   .diagram-preview {
     background: var(--cream);
     border-radius: 12px;
-    padding: 40px 20px;
+    padding: 12px;
     text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--text-secondary);
-    white-space: pre-line;
     overflow-x: auto;
+  }
+
+  .diagram-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
   }
 
   .diagram-actions {
@@ -576,7 +577,7 @@
     .nav-tab { padding: 12px 14px; font-size: 13px; }
     .day-grid { gap: 4px; }
     .day-dot { font-size: 10px; }
-    .diagram-preview { font-size: 12px; padding: 20px 12px; }
+    .diagram-preview { padding: 8px; }
   }
 </style>
 </head>
@@ -1078,20 +1079,8 @@
       <h3>1. The PDA Loop</h3>
       <p>How agents think: Perceive → Decide → Act, on repeat.</p>
       <div class="diagram-preview">
-👁️ PERCEIVE          🧠 DECIDE           ⚡ ACT
-Receive input    →   LLM reasons     →   Execute action
-User query           Chain-of-thought     Call tool, respond
-Tool results         Plan next step       Update memory
-
-                    🔄 Loop until task complete
-
-Example: "What's the weather?"
-👁️ User asks about weather
-🧠 I need to call the weather API
-⚡ Call weather_tool("Sydney")
-👁️ Tool returns "25°C, sunny"
-🧠 I have the answer
-⚡ "It's 25°C and sunny in Sydney!"</div>
+        <img src="../diagrams/01-pda-loop.svg" alt="Perceive-Decide-Act Loop — How agents think in cycles">
+      </div>
       <div class="diagram-actions">
         <a class="btn btn-outline" href="https://github.com/Alex-Mac8/ai-agent-learning/blob/main/diagrams/01-pda-loop.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
       </div>
@@ -1101,21 +1090,8 @@ Example: "What's the weather?"
       <h3>2. Agent vs Chatbot vs RAG</h3>
       <p>Understanding the spectrum from simple chatbot to autonomous agent.</p>
       <div class="diagram-preview">
-💬 CHATBOT              📚 RAG                 🤖 AGENT
-─────────────────────────────────────────────────────────
-User → LLM → Answer    User → Search → LLM    User → Think → Act → Loop
-
-✅ Simple Q&A           ✅ Knowledge retrieval  ✅ Multiple tools
-✅ Conversation         ✅ Grounded answers     ✅ Planning & reasoning
-                        ✅ Source citations     ✅ Memory (short+long)
-❌ No tools                                    ✅ Autonomous actions
-❌ No long-term memory  ❌ No multi-step       ✅ Multi-step tasks
-❌ No planning          ❌ Reactive only
-❌ No autonomy
-
-Think: ChatGPT basic   Think: Perplexity      Think: Alex, AutoGPT
-
-Simple ←───────────────────────────────────────→ Powerful</div>
+        <img src="../diagrams/02-agent-vs-chatbot-vs-rag.svg" alt="Agent vs Chatbot vs RAG — Capability comparison">
+      </div>
       <div class="diagram-actions">
         <a class="btn btn-outline" href="https://github.com/Alex-Mac8/ai-agent-learning/blob/main/diagrams/02-agent-vs-chatbot-vs-rag.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
       </div>
@@ -1125,21 +1101,8 @@ Simple ←───────────────────────�
       <h3>3. Tool Calling Architecture</h3>
       <p>How LLMs interact with external tools through structured JSON.</p>
       <div class="diagram-preview">
-👤 User                  🧠 LLM                    📞 Tool Call
-"What's the weather?"  →  Reads tool schemas    →   {
-                          Decides: use search         "tool": "weather",
-                          Generates JSON call          "location": "Sydney"
-                                                      }
-                                                        ↓
-📋 Tool Schema            🔧 Tool Registry
-Available tools:          ┌─────────┬──────────┐
-- weather(location)       │🔍Search │🧮Calculate│
-- search(query)           │💾Save   │📧Email    │
-- calculate(expr)         └─────────┴──────────┘
-                                    ↓
-                            Results → back to LLM → Response to User
-
-Key: The LLM never runs tools directly — it outputs JSON that the system executes.</div>
+        <img src="../diagrams/03-tool-calling.svg" alt="Tool Calling Architecture — How LLMs use tools via JSON">
+      </div>
       <div class="diagram-actions">
         <a class="btn btn-outline" href="https://github.com/Alex-Mac8/ai-agent-learning/blob/main/diagrams/03-tool-calling.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
       </div>
@@ -1149,25 +1112,8 @@ Key: The LLM never runs tools directly — it outputs JSON that the system execu
       <h3>4. Multi-Agent Collaboration</h3>
       <p>How specialized agents work together on complex tasks.</p>
       <div class="diagram-preview">
-                        👑 COORDINATOR
-                   Routes tasks, checks quality
-                    ╱         │         ╲
-                  ╱           │           ╲
-          🔍 Researcher   ✍️ Writer    📝 Editor
-          Web Search      Text Gen     Grammar Check
-          API Calls       Formatting   Fact Verify
-          Data Analysis   Templates    Style Guide
-
-Pipeline Flow:
-1️⃣ User Request → Coordinator receives topic
-2️⃣ Coordinator → Researcher: "Find info about X"
-3️⃣ Research findings → Writer: "Write about X"
-4️⃣ Draft → Editor: "Polish this"
-5️⃣ Final content → User
-
-Patterns:
-🏢 Supervisor (above)  🤝 Peer (equals)
-🔗 Pipeline (A→B→C)    ⚖️ Debate (challenge)</div>
+        <img src="../diagrams/04-multi-agent.svg" alt="Multi-Agent Collaboration — Specialized agents working together">
+      </div>
       <div class="diagram-actions">
         <a class="btn btn-outline" href="https://github.com/Alex-Mac8/ai-agent-learning/blob/main/diagrams/04-multi-agent.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
       </div>
@@ -1177,21 +1123,8 @@ Patterns:
       <h3>5. Course Concept Map</h3>
       <p>How all 21 days connect together.</p>
       <div class="diagram-preview">
-  🧠 Week 1: Foundations         🤖 AI AGENT          🚀 Week 3: Advanced
-  ┌──────────┬──────────┐           (core)           ┌──────────┬──────────┐
-  │ PDA Loop │  Tools   │     ←─── center ───→       │Multi-Agt │Production│
-  │  Memory  │ vs Chat  │                            │  Safety  │ Patterns │
-  └──────────┴──────────┘                            └──────────┴──────────┘
-                                    │
-                                    ↓
-                          🔨 Week 2: Building
-                          ┌──────────┬──────────┐
-                          │LangChain │ Prompts  │
-                          │  🔎 Research Agent   │
-                          └──────────┴──────────┘
-
-  🧠 Understand → 🔨 Build → 🚀 Scale
-  Theory (Wk 1) → Practice (Wk 2) → Mastery (Wk 3)</div>
+        <img src="../diagrams/05-weekly-concept-map.svg" alt="Course Concept Map — How all 21 days connect">
+      </div>
       <div class="diagram-actions">
         <a class="btn btn-outline" href="https://github.com/Alex-Mac8/ai-agent-learning/blob/main/diagrams/05-weekly-concept-map.excalidraw" target="_blank">✏️ Edit in Excalidraw</a>
       </div>
