@@ -326,7 +326,7 @@ print(final)
 - 🎥 [LangGraph Multi-Agent](https://www.youtube.com/watch?v=bq1Plo2RhAc) — Graph-based workflows
 
 ### Reading
-- 📄 [Anthropic: Multi-Agent Patterns](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — "Orchestrator-workers" section
+- 📄 [Anthropic: Multi-Agent Patterns](https://www.anthropic.com/engineering/building-effective-agents) — "Orchestrator-workers" section
 - 📄 [CrewAI Documentation](https://docs.crewai.com/) — Full framework docs
 - 📄 [LangGraph Multi-Agent Tutorial](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/) — Official tutorial
 

@@ -160,7 +160,7 @@ These aren't toys — they're real, useful tools. The research agent can save ho
 Take these at your own pace:
 
 ### Must-Read
-- 📄 [Anthropic: Building Effective Agents](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — The production guide
+- 📄 [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) — The production guide
 - 📄 [Lilian Weng: LLM Agents](https://lilianweng.github.io/posts/2023-06-23-agent/) — The comprehensive overview
 - 📄 [LangGraph Documentation](https://langchain-ai.github.io/langgraph/) — Your primary building tool
 

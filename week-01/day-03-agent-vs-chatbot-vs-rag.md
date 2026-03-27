@@ -304,7 +304,7 @@ Design a hybrid system. Draw or describe:
 - 🎥 [RAG vs Fine-tuning vs Agents](https://www.youtube.com/watch?v=YVWxbcJGel0) — Great comparison for choosing approaches
 
 ### Reading
-- 📄 [Anthropic: Building Effective Agents](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — Section on "When to use agents" is gold
+- 📄 [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) — Section on "When to use agents" is gold
 - 📄 [LangChain: RAG Concepts](https://python.langchain.com/docs/concepts/rag/) — Understand RAG architecture deeply
 - 📄 [Chip Huyen: Building LLM Applications](https://huyenchip.com/2023/04/11/llm-engineering.html) — Excellent overview of LLM system architectures
 

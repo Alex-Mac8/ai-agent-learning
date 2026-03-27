@@ -340,7 +340,7 @@ Deliberately make one agent fail (e.g., return empty string) and verify:
 ### Reading
 - 📄 [LangGraph: State Management](https://langchain-ai.github.io/langgraph/concepts/low_level/#state) — How LangGraph handles shared state
 - 📄 [LangGraph: Multi-Agent Guide](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/) — Full multi-agent tutorial
-- 📄 [Anthropic: Orchestrator-Workers](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — Handoff patterns
+- 📄 [Anthropic: Orchestrator-Workers](https://www.anthropic.com/engineering/building-effective-agents) — Handoff patterns
 
 ## 🤔 Reflection Questions
 

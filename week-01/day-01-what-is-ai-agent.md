@@ -186,7 +186,7 @@ Pick a task you do regularly (research, planning, writing). Sketch out how an ag
 
 ### Reading
 - 📄 [Lilian Weng: LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/) — **Start here**. The definitive blog post on agents. Read sections 1-2 today.
-- 📄 [Anthropic: Building Effective Agents](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — Practical patterns from the makers of Claude. Read the introduction.
+- 📄 [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) — Practical patterns from the makers of Claude. Read the introduction.
 - 📄 [OpenAI: A Practical Guide to Building Agents](https://platform.openai.com/docs/guides/agents) — OpenAI's perspective on agent design.
 
 ### GitHub Repos to Explore

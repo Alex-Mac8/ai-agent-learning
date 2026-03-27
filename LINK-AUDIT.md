@@ -121,7 +121,7 @@
 
 ### 1. Anthropic Documentation URL ❌ → ✅
 **Issue:** Day 17 and Videos section linked to:  
-`https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns`
+`https://www.anthropic.com/engineering/building-effective-agents`
 
 **Fixed to:**  
 `https://www.anthropic.com/engineering/building-effective-agents`

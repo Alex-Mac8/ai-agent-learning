@@ -115,4 +115,4 @@ Use the template in `build-in-public/week-03-post.md`
 - [CrewAI Documentation](https://docs.crewai.com/)
 - [AutoGen: Multi-Agent Framework](https://microsoft.github.io/autogen/)
 - [LangGraph Multi-Agent Tutorial](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/)
-- [Anthropic: Building Effective Agents](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns)
+- [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)

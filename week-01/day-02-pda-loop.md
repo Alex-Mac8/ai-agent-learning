@@ -352,7 +352,7 @@ Step 3: "A 15% tip on $47.50 is $7.13, making the total $54.63."
 ### Reading
 - 📄 [ReAct Paper (Yao et al., 2022)](https://arxiv.org/abs/2210.03629) — The original paper. Read the abstract and Section 2.
 - 📄 [Lilian Weng: LLM Agents](https://lilianweng.github.io/posts/2023-06-23-agent/) — Section on "Task Decomposition" and "ReAct"
-- 📄 [Anthropic: Agent Patterns](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — Focus on "Augmented LLM" and "Agent Loop" sections
+- 📄 [Anthropic: Agent Patterns](https://www.anthropic.com/engineering/building-effective-agents) — Focus on "Augmented LLM" and "Agent Loop" sections
 
 ### Papers
 - 📑 [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — The foundational paper

@@ -388,7 +388,7 @@ This is exactly what self-correcting agents do — generate → critique → rev
 - 📄 [Lilian Weng: Planning Section](https://lilianweng.github.io/posts/2023-06-23-agent/#planning) — Comprehensive academic overview
 - 📄 [Chain of Thought Prompting (Wei et al., 2022)](https://arxiv.org/abs/2201.11903) — The original CoT paper
 - 📄 [Tree of Thoughts (Yao et al., 2023)](https://arxiv.org/abs/2305.10601) — Deliberate problem solving with LLMs
-- 📄 [Anthropic: Workflows & Agents](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — Practical agent patterns including planning
+- 📄 [Anthropic: Workflows & Agents](https://www.anthropic.com/engineering/building-effective-agents) — Practical agent patterns including planning
 
 ### Papers
 - 📑 [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) — The foundational ReAct paper

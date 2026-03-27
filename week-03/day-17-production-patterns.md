@@ -356,7 +356,7 @@ Try these adversarial inputs and verify your guardrails work:
 - 🎥 [Deploying AI Agents in Production](https://www.youtube.com/watch?v=aqdWSYWC_LO) — Real-world deployment
 
 ### Reading
-- 📄 [Anthropic: Building Effective Agents — Safety](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — "Error handling and guardrails" section
+- 📄 [Anthropic: Building Effective Agents — Safety](https://www.anthropic.com/engineering/building-effective-agents) — "Error handling and guardrails" section
 - 📄 [OpenAI: Safety Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
 - 📄 [LangGraph: Human-in-the-Loop](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/) — Official HITL guide
 - 📄 [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Security checklist

@@ -239,7 +239,7 @@ Everything from this week in one place:
 
 ### Essential Reading
 - 📄 [Lilian Weng: LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/) — The single best overview
-- 📄 [Anthropic: Building Effective Agents](https://docs.anthropic.com/en/docs/build-with-claude/agent-patterns) — Production patterns
+- 📄 [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) — Production patterns
 - 📄 [OpenAI: A Practical Guide to Building Agents](https://platform.openai.com/docs/guides/agents) — OpenAI's perspective
 
 ### Key Papers
