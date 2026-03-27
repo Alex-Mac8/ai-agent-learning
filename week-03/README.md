@@ -26,7 +26,7 @@
 **Time:** 60 min (40 min video + 20 min notes)
 
 **Watch:**
-- 🎥 [Agent Communication Protocols](https://www.youtube.com/watch?v=DjuXACWYkkU) — Sam Witteveen (20 min)
+- 🎥 [Agent Communication Protocols](https://www.youtube.com/watch?v=hvAPnpSfSGo) — Sam Witteveen (20 min)
 - 🎥 [LangGraph: Building Multi-Agent Workflows](https://www.youtube.com/watch?v=bq1Plo2RhAc) — (20 min)
 
 **Key Concepts:**

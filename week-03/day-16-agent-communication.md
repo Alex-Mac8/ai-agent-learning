@@ -335,7 +335,7 @@ Deliberately make one agent fail (e.g., return empty string) and verify:
 
 ### Videos
 - 🎥 [LangGraph: Building Multi-Agent Workflows](https://www.youtube.com/watch?v=bq1Plo2RhAc) — Official tutorial
-- 🎥 [Agent Communication Protocols](https://www.youtube.com/watch?v=DjuXACWYkkU) — Sam Witteveen
+- 🎥 [Agent Communication Protocols](https://www.youtube.com/watch?v=hvAPnpSfSGo) — Sam Witteveen
 
 ### Reading
 - 📄 [LangGraph: State Management](https://langchain-ai.github.io/langgraph/concepts/low_level/#state) — How LangGraph handles shared state

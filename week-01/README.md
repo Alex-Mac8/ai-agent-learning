@@ -9,7 +9,7 @@
 
 **Watch:**
 - 🎥 [What are AI Agents?](https://www.youtube.com/watch?v=F8NKVhkZZWI) — AI Jason (15 min)
-- 🎥 [AI Agents Explained](https://www.youtube.com/watch?v=sal78ACtGTc) — David Ondrej (12 min)
+- 🎥 [AI Agents Explained](https://www.youtube.com/watch?v=g24tJk8Flsk) — David Ondrej (12 min)
 - 🎥 [DeepLearning.AI: What is an Agent?](https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/) — Lesson 1 (15 min)
 
 **Key Concepts:**
@@ -40,7 +40,7 @@
 **Time:** 60 min (30 min video + 30 min diagram)
 
 **Watch:**
-- 🎥 [How AI Agents Think](https://www.youtube.com/watch?v=sal78ACtGTc) — Focus on the reasoning loop
+- 🎥 [How AI Agents Think](https://www.youtube.com/watch?v=g24tJk8Flsk) — Focus on the reasoning loop
 - 🎥 [ReAct Pattern Explained](https://www.youtube.com/watch?v=Eug2clsLtFs) — Sam Witteveen (20 min)
 
 **Key Concepts:**
@@ -78,7 +78,7 @@
 
 **Watch:**
 - 🎥 [Function Calling Explained](https://www.youtube.com/watch?v=0lOSvOoF2to) — Sam Witteveen (25 min)
-- 🎥 [OpenAI Function Calling](https://www.youtube.com/watch?v=aqdWSYWC_LO) — (15 min)
+- 🎥 [OpenAI Function Calling](https://www.youtube.com/watch?v=aqdWSYWC_LI) — (15 min)
 
 **Key Concepts:**
 - Function calling = how LLMs interact with external tools

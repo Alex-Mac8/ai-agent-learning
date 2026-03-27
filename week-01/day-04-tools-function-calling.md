@@ -404,7 +404,7 @@ If you have Python and an OpenAI API key:
 
 ### Videos
 - 🎥 [Function Calling Explained](https://www.youtube.com/watch?v=0lOSvOoF2to) — Sam Witteveen (25 min) — Deep technical walkthrough
-- 🎥 [OpenAI Function Calling Tutorial](https://www.youtube.com/watch?v=aqdWSYWC_LO) — Practical code examples
+- 🎥 [OpenAI Function Calling Tutorial](https://www.youtube.com/watch?v=aqdWSYWC_LI) — Practical code examples
 - 🎥 [Anthropic Tool Use Guide](https://www.youtube.com/watch?v=d6q_fYkGbgc) — Claude's approach to function calling
 
 ### Reading
